@@ -2,7 +2,7 @@
 
 namespace Deployer;
 
-require_once 'recipe/symfony4.php';
+require_once 'recipe/symfony.php';
 
 // Config
 add('recipes', ['bolt']);
@@ -14,36 +14,9 @@ set('git_tty', false);
 set('ssh_multiplexing', false);
 set('vhost_symlink', null);
 
-set('bin/console', function () {
-    return parse('{{release_path}}/bin/console --no-interaction');
-});
-
-set('bin/php', function () {
-    $bin = get('bin', []);
-    return isset($bin['php']) ? $bin['php'] : locateBinaryPath('php');
-});
-
-set('bin/git', function () {
-    $bin = get('bin', []);
-    return isset($bin['git']) ? $bin['git'] : locateBinaryPath('git');
-});
-
 set('bin/composer', function () {
-    $bin = get('bin', []);
-    if (isset($bin['composer'])) {
-        return $bin['composer'];
-    }
-
-    if (commandExist('composer')) {
-        $composer = locateBinaryPath('composer');
-    }
-
-    if (empty($composer)) {
-        run("cd {{release_path}} && curl -sS https://getcomposer.org/installer | {{bin/php}}");
-        $composer = '{{bin/php}} {{release_path}}/composer.phar';
-    }
-
-    return $composer;
+    run("cd {{release_path}} && curl -sS https://getcomposer.org/installer | {{bin/php}}");
+    return '{{bin/php}} {{release_path}}/composer.phar';
 });
 
 set('branch', function () {

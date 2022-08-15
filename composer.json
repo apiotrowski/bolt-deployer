@@ -7,9 +7,13 @@
         {
             "name": "Bob den Otter",
             "email": "bob@twokings.nl"
+        },
+        {
+            "name": "Andrzej Piotrowski",
+            "email": "andrzejp@gmail.com"
         }
     ],
     "require": {
-        "deployer/deployer": "^6.8"
+        "deployer/deployer": "^7.0"
     }
 }
